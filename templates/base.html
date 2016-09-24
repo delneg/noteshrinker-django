@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Force latest IE rendering engine or ChromeFrame if installed -->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <![endif]-->
+    <meta charset="UTF-8">
+
+    <title>NoteShrinker</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Generic page styles -->
+    <link rel="stylesheet" href="{% static 'noteshrinker/css/style.css' %}">
+    <!-- blueimp Gallery styles -->
+    <link rel="stylesheet" href="{% static 'noteshrinker/css/blueimp-gallery.min.css' %}">
+    <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+    <link rel="stylesheet" href="{% static 'noteshrinker/css/jquery.fileupload-ui.css' %}">
+    <!-- CSS adjustments for browsers with JavaScript disabled -->
+    <noscript><link rel="stylesheet" href="{% static 'noteshrinker/css/jquery.fileupload-ui-noscript.css' %}"></noscript>
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <!-- Shim to make HTML5 elements usable in older Internet Explorer versions -->
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+
+</head>
+<body>
+{% block content %}{% endblock content %}
+{% block js %}{% endblock js %}
+</body>
+
+</html>
