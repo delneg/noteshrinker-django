@@ -364,7 +364,9 @@ the background color to pure white.
 
     output_img = Image.fromarray(labels, 'P')
     output_img.putpalette(palette.flatten())
-    output_img.save(output_filename, dpi=dpi)
+    filename = os.path.join(options.picture_folder,output_filename)
+    output_img.save(filename, dpi=dpi)
+    return filename
 
 ######################################################################
 
@@ -436,6 +438,7 @@ def emit_pdf(outputs, options):
             print('  wrote', options.pdfname)
     else:
         sys.stderr.write('warning: PDF command failed\n')
+    return options.pdfname
 
 ######################################################################
 
@@ -471,21 +474,23 @@ def notescan_main(options):
 
         labels = apply_palette(img, palette, options)
 
-        save(output_filename, labels, palette, dpi, options)
+        saved_filename = save(output_filename, labels, palette, dpi, options)
 
-        if do_postprocess:
-            post_filename = postprocess(output_filename, options)
-            if post_filename:
-                output_filename = post_filename
-            else:
-                do_postprocess = False
+        # if do_postprocess:
+        #     post_filename = postprocess(output_filename, options)
+        #     if post_filename:
+        #         output_filename = post_filename
+        #     else:
+        #         do_postprocess = False
 
-        outputs.append(output_filename)
+        outputs.append(saved_filename)
 
         if not options.quiet:
             print('  done\n')
 
-    emit_pdf(outputs, options)
+    saved_pdf = emit_pdf(outputs, options)
+    return outputs,saved_pdf
+
 
 ######################################################################
 # Namespace(

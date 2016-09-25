@@ -124,3 +124,5 @@ STATIC_ROOT = "static_collected/"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'noteshrinker', 'media')
 PDF_ROOT = os.path.join(BASE_DIR, 'noteshrinker', 'pdf')
+PNG_ROOT = os.path.join(MEDIA_ROOT,'png')
+RANDOM_STRING_LEN=7

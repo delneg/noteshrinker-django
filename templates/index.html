@@ -17,14 +17,17 @@
 
         <span class="btn btn-success fileinput-button">
         <i class="glyphicon glyphicon-plus"></i>
-        <span>Добавить файлы...</span>
+        <span>1. Добавить файлы</span>
 
             <!-- The file input field used as target for the file upload widget -->
         <input id="fileupload" type="file" name="file" multiple>
         </span>
-            <span class="btn btn-primary" id="fileshrink-button" onclick="send_and_shrink()">
-            Преобразовать...
+        <span class="btn btn-primary" id="fileshrink-button" onclick="send_and_shrink()">
+            2. Преобразовать
         </span>
+        <a class="btn btn-warning disabled" id="download-pdf-button" target="_blank" style="color:#fff">
+            3. Скачать PDF
+        </a>
             <br>
             <br>
             <!-- The global progress bar -->
@@ -35,10 +38,26 @@
             <blockquote id="files-annotation"><h5>Здесь будут показаны добавленные файлы</h5></blockquote>
             <div id="files" class="files"></div>
         </div>
+        <style>
+            .ui-input-text{
+                margin: 0 0;
+            }
+            .row{
+                margin-top: 5px;
+            }
+        </style>
         <div class="col-md-offset-2 col-md-4">
             <h2> Настройки </h2>
                 <div class="row">
-
+                    <label for="base-name">Название картинок</label>
+                    <input type="text" id="base-name" value="страница">
+                </div>
+                <div class="row">
+                    <label for="pdf-name">Название PDF</label>
+                    <div class="input-group" >
+                      <input id="pdf-name" type="text"  value="документы" aria-describedby="pdf-appendix" >
+                      <span class="input-group-addon" id="pdf-appendix">.pdf</span>
+                    </div>
                 </div>
                 <div class="row">
 
@@ -47,8 +66,7 @@
                 </div>
                 <div class="row">
                     <label for="pixel-amount">Пикселей учитывать, в %</label>
-                    <input type="range" id="pixel-amount" min="1" max="100" value="5"/>
-                    {#            <input id="pixel-amount" data-slider-id='pixel-amount-slider' type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="5"/>#}
+                    <input type="range" id="pixel-amount" min="1" max="30" value="5"/>
                 </div>
                 <div class="row">
                     <label for="sat-threshold-amount">Насыщенность фона</label>
@@ -151,6 +169,7 @@
                     + message + '</div>'
             );
         }
+
         function send_and_shrink() {
             var csrftoken = $.cookie('csrftoken');
             clear_alerts();
@@ -159,6 +178,19 @@
                 filenames.push(obj.innerHTML);
             });
             if (filenames.length > 0) {
+                var form_data={
+                    "basename":$("#base-name").val(),
+                    "pdfname":$("#pdf-name").val(),
+                    "num_colors":$("#colors-amount").val(),
+                    "sample_fraction":$("#pixel-amount").val(),
+                    "sat_threshold":$("#sat-threshold-amount").val(),
+                    "value_threshold":$("#val-threshold-amount").val(),
+                    "global_palette":$("#use-one-palette").val(),
+                    "sort_numerically":$("#sort-numerically").val(),
+                    "white_bg":$("#white-background").val(),
+                    "files":filenames
+                };
+
                 $.ajax({
                     type: 'POST',
                     beforeSend: function (xhr, settings) {
@@ -167,12 +199,18 @@
                         }
                     },
                     dataType: 'json',
-                    data: {"files": filenames},
+                    data: form_data,
                     url: '/shrink',
                     success: function (data) {
-                        console.log(data);
+                        var proper_pdf_name=data.pdf.substr(data.pdf.indexOf('_')+1);
+                        var download_pdf_button = $('#download-pdf-button');
+                        download_pdf_button.removeClass('disabled');
+                        download_pdf_button.attr('href','/download_pdf?filename='+data.pdf);
+                        download_pdf_button.attr('download',proper_pdf_name);
                     },
                     error: function (data) {
+                        //TODO: показать алерт с ошибкой
+                        clear_alerts();
                         console.log(data);
                     }
                 });
@@ -180,6 +218,7 @@
                 display_alert('Нет загруженных файлов!', 'danger', $("#fileshrink-button"));
             }
         }
+
         $(function () {
             'use strict';
 
