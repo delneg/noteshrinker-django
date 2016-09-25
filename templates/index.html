@@ -1,6 +1,73 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load upload_tags %}
 {% block content %}
+    <style>
+        button.ui-btn {
+            width: inherit;
+        }
+
+        .ui-btn {
+            display: inline-block;
+        }
+
+        .ui-btn.btn-sm {
+            font-size: 12px;
+            padding-top: 5px;
+            padding-right: 10px;
+            padding-bottom: 5px;
+            padding-left: 10px;
+            margin: 0;
+        }
+        .ui-btn.btn-md {
+            font-size: 14px;
+            padding-top: 7px;
+            padding-right: 12px;
+            padding-bottom: 7px;
+            padding-left: 12px;
+            margin: 0;
+        }
+        .gly-spin {
+      -webkit-animation: spin 2s infinite linear;
+      -moz-animation: spin 2s infinite linear;
+      -o-animation: spin 2s infinite linear;
+      animation: spin 2s infinite linear;
+    }
+    @-moz-keyframes spin {
+      0% {
+        -moz-transform: rotate(0deg);
+      }
+      100% {
+        -moz-transform: rotate(359deg);
+      }
+    }
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(359deg);
+      }
+    }
+    @-o-keyframes spin {
+      0% {
+        -o-transform: rotate(0deg);
+      }
+      100% {
+        -o-transform: rotate(359deg);
+      }
+    }
+    @keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+      }
+    }
+    </style>
     <div class="container">
         <h1>NoteShrinker</h1>
         <h2 class="lead">Простое решение для удобства работы с заметками, лекциями, записками и рабочими
@@ -13,86 +80,114 @@
         <br>
 
         <!-- The fileinput-button span is used to style the file input field as button -->
-        <div class="col-md-6">
+        <div class="col-md-6" id="first-col">
+            <form id="fileupload" method="post" action="." enctype="multipart/form-data">{% csrf_token %}
 
-        <span class="btn btn-success fileinput-button">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>1. Добавить файлы</span>
+                <div class="row fileupload-buttonbar">
+                    <!-- The fileinput-button span is used to style the file input field as button -->
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>1. Добавить файлы</span>
+                        <input type="file" name="file" multiple>
+                    </span>
+                    <span class="btn btn-primary" id="fileshrink-button" onclick="send_and_shrink()">
+                        <i id="fileshrink-spinner" style="display: none;" class="glyphicon glyphicon-repeat gly-spin"></i>
+                        2. Преобразовать
+                    </span>
+                    <a class="btn btn-warning disabled" id="download-pdf-button" target="_blank" style="color:#fff">
+                        3. Скачать PDF
+                    </a>
+                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                    <button type="submit" class="btn btn-primary start btn-md">
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>Загрузить все</span>
+                    </button>
+                    <button type="reset" class="btn btn-warning cancel btn-sm">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Отменить загрузку</span>
+                    </button>
+                    <button type="button" class="btn btn-danger delete btn-sm">
+                        <i class="glyphicon glyphicon-trash"></i>
+                        <span>Очистить</span>
+                    </button>
+                    <!-- The loading indicator is shown during file processing -->
+                    <span class="fileupload-loading"></span>
+                    <!-- The global progress information -->
+                    <div class="fileupload-progress fade">
+                        <!-- The global progress bar -->
+                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0"
+                             aria-valuemax="100">
+                            <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                        </div>
+                        <!-- The extended global progress information -->
+                        <div class="progress-extended">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="row">
 
-            <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="file" multiple>
-        </span>
-        <span class="btn btn-primary" id="fileshrink-button" onclick="send_and_shrink()">
-            2. Преобразовать
-        </span>
-        <a class="btn btn-warning disabled" id="download-pdf-button" target="_blank" style="color:#fff">
-            3. Скачать PDF
-        </a>
-            <br>
-            <br>
-            <!-- The global progress bar -->
-            <div id="progress" class="progress">
-                <div class="progress-bar progress-bar-success"></div>
-            </div>
-            <!-- The container for the uploaded files -->
-            <blockquote id="files-annotation"><h5>Здесь будут показаны добавленные файлы</h5></blockquote>
-            <div id="files" class="files"></div>
+                </div>
+                <!-- The table listing the files available for upload/download -->
+                <table role="presentation" class="table table-striped">
+                    <tbody class="files"></tbody>
+                </table>
+            </form>
         </div>
         <style>
-            .ui-input-text{
+            .ui-input-text {
                 margin: 0 0;
             }
-            .row{
+
+            .row {
                 margin-top: 5px;
             }
         </style>
         <div class="col-md-offset-2 col-md-4">
             <h2> Настройки </h2>
-                <div class="row">
-                    <label for="base-name">Название картинок</label>
-                    <input type="text" id="base-name" value="страница">
+            <div class="row">
+                <label for="base-name">Название картинок</label>
+                <input type="text" id="base-name" value="страница">
+            </div>
+            <div class="row">
+                <label for="pdf-name">Название PDF</label>
+                <div class="input-group">
+                    <input id="pdf-name" type="text" value="документы" aria-describedby="pdf-appendix">
+                    <span class="input-group-addon" id="pdf-appendix">.pdf</span>
                 </div>
-                <div class="row">
-                    <label for="pdf-name">Название PDF</label>
-                    <div class="input-group" >
-                      <input id="pdf-name" type="text"  value="документы" aria-describedby="pdf-appendix" >
-                      <span class="input-group-addon" id="pdf-appendix">.pdf</span>
-                    </div>
-                </div>
-                <div class="row">
+            </div>
+            <div class="row">
 
-                    <label for="colors-amount">Цветов на выходе</label>
-                    <input type="range" class="custom" id="colors-amount" min="1" max="20" value="8" />
-                </div>
-                <div class="row">
-                    <label for="pixel-amount">Пикселей учитывать, в %</label>
-                    <input type="range" id="pixel-amount" min="1" max="30" value="5"/>
-                </div>
-                <div class="row">
-                    <label for="sat-threshold-amount">Насыщенность фона</label>
-                    <input type="range" id="sat-threshold-amount" min="0" max="1" step="0.1" value="0.2"
-                           />
-                </div>
-                <div class="row">
-                    <label for="val-threshold-amount">Пороговое значение фона</label>
-                    <input type="range" id="val-threshold-amount" min="0" max="1" step="0.1" value="0.25"
-                           />
-                </div>
-                <div class="row">
-                    <input type="checkbox" id="use-one-palette"/>
-                    <label for="use-one-palette">Единая палитра цветов</label>
+                <label for="colors-amount">Цветов на выходе</label>
+                <input type="range" class="custom" id="colors-amount" min="1" max="20" value="8"/>
+            </div>
+            <div class="row">
+                <label for="pixel-amount">Пикселей учитывать, в %</label>
+                <input type="range" id="pixel-amount" min="1" max="30" value="5"/>
+            </div>
+            <div class="row">
+                <label for="sat-threshold-amount">Насыщенность фона</label>
+                <input type="range" id="sat-threshold-amount" min="0" max="1" step="0.1" value="0.2"
+                />
+            </div>
+            <div class="row">
+                <label for="val-threshold-amount">Пороговое значение фона</label>
+                <input type="range" id="val-threshold-amount" min="0" max="1" step="0.1" value="0.25"
+                />
+            </div>
+            <div class="row">
+                <input type="checkbox" id="use-one-palette"/>
+                <label for="use-one-palette">Единая палитра цветов</label>
 
-                </div>
-                <div class="row">
-                    <input type="checkbox" id="sort-numerically" checked/>
-                    <label for="sort-numerically">Оставить порядок следования</label>
+            </div>
+            <div class="row">
+                <input type="checkbox" id="sort-numerically" checked/>
+                <label for="sort-numerically">Оставить порядок следования</label>
 
-                </div>
-                <div class="row">
-                    <input type="checkbox" id="white-background"/>
-                    <label for="white-background">Белый фон</label>
+            </div>
+            <div class="row">
+                <input type="checkbox" id="white-background"/>
+                <label for="white-background">Белый фон</label>
 
-                </div>
+            </div>
 
 
         </div>
@@ -119,6 +214,17 @@
         </div>
 
     </div>
+    <!-- The blueimp Gallery widget -->
+    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
+    {% upload_js %}
 {% endblock %}
 {% block js %}
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -131,10 +237,14 @@
     <script src="{% static 'noteshrinker/js/vendor/jquery.ui.widget.js' %}"></script>
     <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
     <script src="{% static 'noteshrinker/js/load-image.min.js' %}"></script>
+    <!-- The Templates plugin is included to render the upload/download listings -->
+    <script src="{% static 'noteshrinker/js/tmpl.min.js' %}"></script>
     <!-- The Canvas to Blob plugin is included for image resizing functionality -->
     <script src="{% static 'noteshrinker/js/canvas-to-blob.min.js' %}"></script>
     <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
     <script src="{% static 'noteshrinker/js/jquery.iframe-transport.js' %}"></script>
+    <!-- blueimp Gallery script -->
+    <script src="{% static 'noteshrinker/js/jquery.blueimp-gallery.min.js' %}"></script>
     <!-- The basic File Upload plugin -->
     <script src="{% static 'noteshrinker/js/jquery.fileupload.js' %}"></script>
     <!-- The File Upload processing plugin -->
@@ -143,6 +253,12 @@
     <script src="{% static 'noteshrinker/js/jquery.fileupload-image.js' %}"></script>
     <!-- The File Upload validation plugin -->
     <script src="{% static 'noteshrinker/js/jquery.fileupload-validate.js' %}"></script>
+    <!-- The File Upload validation plugin -->
+    <script src="{% static 'noteshrinker/js/jquery.fileupload-ui.js' %}"></script>
+
+    <script src="{% static 'noteshrinker/js/main.js' %}"></script>
+    <script src="{% static 'noteshrinker/js/csrf.js' %}"></script>
+    <script src="{% static 'noteshrinker/js/locale.js' %}"></script>
 
     <script src="{% static 'noteshrinker/js/jquery.cookie.js' %}"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -173,23 +289,25 @@
         function send_and_shrink() {
             var csrftoken = $.cookie('csrftoken');
             clear_alerts();
-            var filenames = [];
-            $.each($(".valid_file"), function (i, obj) {
-                filenames.push(obj.innerHTML);
-            });
-            if (filenames.length > 0) {
-                var form_data={
-                    "basename":$("#base-name").val(),
-                    "pdfname":$("#pdf-name").val(),
-                    "num_colors":$("#colors-amount").val(),
-                    "sample_fraction":$("#pixel-amount").val(),
-                    "sat_threshold":$("#sat-threshold-amount").val(),
-                    "value_threshold":$("#val-threshold-amount").val(),
-                    "global_palette":$("#use-one-palette").val(),
-                    "sort_numerically":$("#sort-numerically").val(),
-                    "white_bg":$("#white-background").val(),
-                    "files":filenames
+
+            function isEmpty(value){
+              return (value == null || value.length === 0);
+            }
+            if (!isEmpty(window._uploadedFiles)) {
+                var form_data = {
+                    "basename": $("#base-name").val(),
+                    "pdfname": $("#pdf-name").val(),
+                    "num_colors": $("#colors-amount").val(),
+                    "sample_fraction": $("#pixel-amount").val(),
+                    "sat_threshold": $("#sat-threshold-amount").val(),
+                    "value_threshold": $("#val-threshold-amount").val(),
+                    "global_palette": $("#use-one-palette").val(),
+                    "sort_numerically": $("#sort-numerically").val(),
+                    "white_bg": $("#white-background").val(),
+                    "files": window._uploadedFiles,
                 };
+
+                $("#fileshrink-spinner").show();
 
                 $.ajax({
                     type: 'POST',
@@ -202,121 +320,23 @@
                     data: form_data,
                     url: '/shrink',
                     success: function (data) {
-                        var proper_pdf_name=data.pdf.substr(data.pdf.indexOf('_')+1);
+                        $("#fileshrink-spinner").hide();
+                        var proper_pdf_name = data.pdf.substr(data.pdf.indexOf('_') + 1);
                         var download_pdf_button = $('#download-pdf-button');
                         download_pdf_button.removeClass('disabled');
-                        download_pdf_button.attr('href','/download_pdf?filename='+data.pdf);
-                        download_pdf_button.attr('download',proper_pdf_name);
+                        download_pdf_button.attr('href', '/download_pdf?filename=' + data.pdf);
+                        download_pdf_button.attr('download', proper_pdf_name);
                     },
                     error: function (data) {
+                        $("#fileshrink-button").button('reset');
                         //TODO: показать алерт с ошибкой
                         clear_alerts();
                         console.log(data);
                     }
                 });
             } else {
-                display_alert('Нет загруженных файлов!', 'danger', $("#fileshrink-button"));
+                display_alert('Нет загруженных файлов!', 'danger', $("#first-col"));
             }
         }
-
-        $(function () {
-            'use strict';
-
-            var csrftoken = $.cookie('csrftoken');
-            var url = '/',
-                    uploadButton = $('<button/>')
-                            .addClass('btn btn-primary')
-                            .prop('disabled', true)
-                            .text('Загрузка...')
-                            .on('click', function () {
-                                var $this = $(this),
-                                        data = $this.data();
-                                $this
-                                        .off('click')
-                                        .text('Отменить')
-                                        .on('click', function () {
-                                            $this.remove();
-                                            data.abort();
-                                        });
-                                data.submit().always(function () {
-                                    $this.remove();
-                                });
-                            });
-            $('#fileupload').fileupload({
-                url: url,
-                crossDomain: false,
-                beforeSend: function (xhr, settings) {
-                    if (!csrfSafeMethod(settings.type)) {
-                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                    }
-                },
-                dataType: 'json',
-                autoUpload: false,
-                acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-                maxFileSize: 50000000, // 50 MB
-                // Enable image resizing, except for Android and Opera,
-                // which actually support image resizing, but fail to
-                // send Blob objects via XHR requests:
-                disableImageResize: /Android(?!.*Chrome)|Opera/
-                        .test(window.navigator.userAgent),
-                previewMaxWidth: 100,
-                previewMaxHeight: 100,
-                previewCrop: true
-            }).on('fileuploadadd', function (e, data) {
-                $("#files-annotation").hide();
-                data.context = $('<div/>').appendTo('#files');
-                $.each(data.files, function (index, file) {
-                    var node = $('<p/>')
-                            .append($('<span class="valid_file"/>').text(file.name));
-                    if (!index) {
-                        node
-                                .append('<br>')
-                                .append(uploadButton.clone(true).data(data));
-                    }
-                    node.appendTo(data.context);
-                });
-            }).on('fileuploadprocessalways', function (e, data) {
-                var index = data.index,
-                        file = data.files[index],
-                        node = $(data.context.children()[index]);
-                if (file.preview) {
-                    node
-                            .prepend('<br>')
-                            .prepend(file.preview);
-                }
-                if (file.error) {
-                    node
-                            .append('<br>')
-                            .append(file.error);
-                }
-                if (index + 1 === data.files.length) {
-                    data.context.find('button')
-                            .text('Загрузить')
-                            .prop('disabled', !!data.files.error);
-                }
-            }).on('fileuploadprogressall', function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#progress .progress-bar').css(
-                        'width',
-                        progress + '%'
-                );
-            }).on('fileuploaddone', function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    var link = $('<a>')
-                            .attr('target', '_blank')
-                            .prop('href', file.url);
-                    $(data.context.children()[index])
-                            .wrap(link);
-                });
-            }).on('fileuploadfail', function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    var error = $('<span/>').text(file.error);
-                    $(data.context.children()[index])
-                            .append('<br>')
-                            .append(error);
-                });
-            }).prop('disabled', !$.support.fileInput)
-                    .parent().addClass($.support.fileInput ? undefined : 'disabled');
-        });
     </script>
 {% endblock js %}

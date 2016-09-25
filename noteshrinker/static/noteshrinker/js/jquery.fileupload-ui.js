@@ -136,6 +136,26 @@
                     files = getFilesFromResponse(data),
                     template,
                     deferred;
+                var name_extract=function (file) {
+                    var url = file.url;
+                    var name = decodeURIComponent(url);
+                    name = name.substr(name.lastIndexOf('/') + 1);
+                    return name;
+                };
+                var union = function (array1, array2) {
+                    var hash = {}, union = [];
+                    $.each($.merge($.merge([], array1), array2), function (index, value) { hash[value] = value; });
+                    $.each(hash, function (key, value) { union.push(key); } );
+                    return union;
+                };
+                var actual_files = getFilesFromResponse(data).map(name_extract);
+                if(!window._uploadedFiles)
+                {
+                    window._uploadedFiles=union([],actual_files);
+
+                } else{
+                    window._uploadedFiles=union(window._uploadedFiles,actual_files);
+                }
                 if (data.context) {
                     data.context.each(function (index) {
                         var file = files[index] ||
@@ -307,6 +327,7 @@
             },
             // Callback for file deletion:
             destroy: function (e, data) {
+
                 var that = $(this).data('blueimp-fileupload') ||
                         $(this).data('fileupload'),
                     removeNode = function () {

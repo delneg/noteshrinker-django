@@ -26,13 +26,12 @@ def download_pdf(request):
 
 def index(request):
     return render(request,'index.html')
-#TODO:
-# 1. Сделать чтобы сохранялись загруженные файлы по сессии
-# 2. Удалять сразу не разрешенные файлы
-# 3. Проверять отсутсвующие параметры в shrink
-# 4. Проверять, существуют ли папки PNG_ROOT и PDF_ROOT - создавать если нет
-# 5. Проверять максимальную длину названий файлов
-# 6. Сделать кнопку для резета
+#TODO: 1. Сделать чтобы сохранялись загруженные файлы по сессии
+#DONE: 2. Удалять сразу не разрешенные файлы - не загружаются
+#TODO: 3. Проверять отсутсвующие параметры в shrink
+#TODO: 4. Проверять, существуют ли папки PNG_ROOT и PDF_ROOT - создавать если нет
+#TODO: 5. Проверять максимальную длину названий файлов
+#DONE: 6. Сделать кнопку для резета
 @require_POST
 def shrink(request):
 
@@ -100,23 +99,23 @@ class PictureCreateView(CreateView):
 
 
 
-# class PictureDeleteView(DeleteView):
-#     model = Picture
-#
-#     def delete(self, request, *args, **kwargs):
-#         self.object = self.get_object()
-#         self.object.delete()
-#         response = JSONResponse(True, mimetype=response_mimetype(request))
-#         response['Content-Disposition'] = 'inline; filename=files.json'
-#         return response
+class PictureDeleteView(DeleteView):
+    model = Picture
 
-#
-# class PictureListView(ListView):
-#     model = Picture
-#
-#     def render_to_response(self, context, **response_kwargs):
-#         files = [ serialize(p) for p in self.get_queryset() ]
-#         data = {'files': files}
-#         response = JSONResponse(data, mimetype=response_mimetype(self.request))
-#         response['Content-Disposition'] = 'inline; filename=files.json'
-#         return response
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        response = JSONResponse(True, mimetype=response_mimetype(request))
+        response['Content-Disposition'] = 'inline; filename=files.json'
+        return response
+
+
+class PictureListView(ListView):
+    model = Picture
+
+    def render_to_response(self, context, **response_kwargs):
+        files = [ serialize(p) for p in self.get_queryset() ]
+        data = {'files': files}
+        response = JSONResponse(data, mimetype=response_mimetype(self.request))
+        response['Content-Disposition'] = 'inline; filename=files.json'
+        return response
