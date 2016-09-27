@@ -10,6 +10,7 @@ from .noteshrink_module import AttrDict,notescan_main
 from django.conf import settings
 from django.http import HttpResponse
 from .utils import random_string
+import zipfile
 import os
 @require_GET
 def download_pdf(request):
@@ -21,7 +22,25 @@ def download_pdf(request):
             response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)
             return response
     else:
-        raise Http404
+        raise HttpResponseBadRequest
+
+def download_zip(request):
+    images=request.GET.getlist('images')
+    compression = zipfile.ZIP_DEFLATED
+    image_prefix = images[0][:images[0].find('_')]
+    zipfile_name=os.path.join(settings.PNG_ROOT,'noteshrinker_'+image_prefix+'_'+str(len(images))+'.zip')
+    zf = zipfile.ZipFile(zipfile_name, mode='w',compression=compression)
+    for filename in images:
+        file_path = os.path.join(settings.PNG_ROOT, filename)
+        if os.path.exists(file_path):
+            zf.write(file_path,arcname=filename)
+        else:
+            return HttpResponseBadRequest
+    zf.close()
+    with open(zipfile_name, 'rb') as fh:
+        response = HttpResponse(fh.read(), content_type="application/x-zip-compressed")
+        response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(zipfile_name)
+        return response
 
 
 def index(request):
@@ -32,6 +51,8 @@ def index(request):
 #TODO: 4. Проверять, существуют ли папки PNG_ROOT и PDF_ROOT - создавать если нет
 #TODO: 5. Проверять максимальную длину названий файлов
 #DONE: 6. Сделать кнопку для резета
+#DONE: 7. Сделать view для загрузки ZIP-архива картинок
+#DONE: 8. Кнопка очистить очищает список загруженных файлов в window, деактивирует кнопку скачать
 @require_POST
 def shrink(request):
 

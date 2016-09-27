@@ -3,6 +3,13 @@
 {% load upload_tags %}
 {% block content %}
     <style>
+        .ui-input-text {
+            margin: 0 0;
+        }
+        .row{
+            margin-top: 5px;
+            margin-left: 0;
+        }
         button.ui-btn {
             width: inherit;
         }
@@ -92,11 +99,17 @@
                     </span>
                     <span class="btn btn-primary" id="fileshrink-button" onclick="send_and_shrink()">
                         <i id="fileshrink-spinner" style="display: none;" class="glyphicon glyphicon-repeat gly-spin"></i>
-                        2. Преобразовать
+                            2. Преобразовать
                     </span>
-                    <a class="btn btn-warning disabled" id="download-pdf-button" target="_blank" style="color:#fff">
-                        3. Скачать PDF
-                    </a>
+                    <div class="row">
+                        <a class="btn btn-warning disabled" id="download-pdf-button" target="_blank" style="color:#fff">
+                            3. Скачать PDF
+                        </a>
+                        <a class="btn btn-warning disabled" id="download-zip-button" target="_blank" style="color:#fff">
+                            3. Скачать изображения в ZIP архиве
+                        </a>
+                    </div>
+
                     <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
                     <button type="submit" class="btn btn-primary start btn-md">
                         <i class="glyphicon glyphicon-upload"></i>
@@ -106,9 +119,9 @@
                         <i class="glyphicon glyphicon-ban-circle"></i>
                         <span>Отменить загрузку</span>
                     </button>
-                    <button type="button" class="btn btn-danger delete btn-sm">
+                    <button type="button" class="btn btn-danger delete btn-sm" id="clear-all-button">
                         <i class="glyphicon glyphicon-trash"></i>
-                        <span>Очистить</span>
+                        <span>Удалить выбранные</span>
                     </button>
                     <!-- The loading indicator is shown during file processing -->
                     <span class="fileupload-loading"></span>
@@ -133,13 +146,7 @@
             </form>
         </div>
         <style>
-            .ui-input-text {
-                margin: 0 0;
-            }
 
-            .row {
-                margin-top: 5px;
-            }
         </style>
         <div class="col-md-offset-2 col-md-4">
             <h2> Настройки </h2>
@@ -269,6 +276,13 @@
         }
     </style>
     <script>
+        $("#clear-all-button").click(function () {
+            window._uploadedFiles=[];
+            $("#download-pdf-button").addClass('disabled');
+            $("#download-zip-button").addClass('disabled');
+        });
+
+
         /*jslint unparam: true, regexp: true */
         /*global window, $ */
         function csrfSafeMethod(method) {
@@ -285,7 +299,13 @@
                     + message + '</div>'
             );
         }
-
+        function arrayToQueryString(array_in,key){
+            var out = [];
+            for(var i in array_in){
+                out.push(key + '=' + encodeURIComponent(array_in[i]));
+            }
+            return out.join('&');
+        }
         function send_and_shrink() {
             var csrftoken = $.cookie('csrftoken');
             clear_alerts();
@@ -326,6 +346,10 @@
                         download_pdf_button.removeClass('disabled');
                         download_pdf_button.attr('href', '/download_pdf?filename=' + data.pdf);
                         download_pdf_button.attr('download', proper_pdf_name);
+                        var download_zip_button = $("#download-zip-button");
+                        download_zip_button.removeClass('disabled');
+                        download_zip_button.attr('href','/download_zip?'+arrayToQueryString(data.pngs,'images'));
+                        download_pdf_button.attr('download', $("#pdf-name").val()+'.zip');
                     },
                     error: function (data) {
                         $("#fileshrink-button").button('reset');

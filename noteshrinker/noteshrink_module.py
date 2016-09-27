@@ -455,7 +455,7 @@ def notescan_main(options):
         filenames, palette = get_global_palette(filenames, options)
 
     do_postprocess = bool(options.postprocess_cmd)
-
+    base_filenames=[]
     for input_filename in filenames:
 
         img, dpi = load(input_filename)
@@ -484,12 +484,12 @@ def notescan_main(options):
         #         do_postprocess = False
 
         outputs.append(saved_filename)
-
+        base_filenames.append(output_filename)
         if not options.quiet:
             print('  done\n')
 
     saved_pdf = emit_pdf(outputs, options)
-    return outputs,saved_pdf
+    return base_filenames,saved_pdf
 
 
 ######################################################################
