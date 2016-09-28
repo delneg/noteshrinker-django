@@ -1,7 +1,9 @@
 
 '''Converts sequence of images to compact PDF while removing speckles,
 bleedthrough, etc.
-
+Original author: Matt Zucker, https://github.com/mzucker/noteshrink
+Python3 adaptation, django packaging: https://github.com/delneg/
+License: MIT
 '''
 
 # for some reason pylint complains about members being undefined :(
@@ -475,7 +477,7 @@ def notescan_main(options):
         labels = apply_palette(img, palette, options)
 
         saved_filename = save(output_filename, labels, palette, dpi, options)
-
+        # Commented out postprocess to simplify (may enable later)
         # if do_postprocess:
         #     post_filename = postprocess(output_filename, options)
         #     if post_filename:
@@ -493,38 +495,3 @@ def notescan_main(options):
 
 
 ######################################################################
-# Namespace(
-# basename='page',
-# filenames=['/Users/Delneg/Documents/noteshrink/my_notes/savva_1.jpg'],
-#  global_palette=False,
-#           num_colors=8,
-#  pdf_cmd='convert %i %o',
-#  pdfname='junk.pdf',
-#  postprocess_cmd=None,
-#  postprocess_ext='_post.png',
-#           quiet=False,
-#  sample_fraction=0.05,
-#  sat_threshold=0.2,
-# saturate=True,
-# sort_numerically=True,
-#           value_threshold=0.25,
-# white_bg=False)
-# d = {
-#     "basename": 'page', #базовое название для картинки
-#     "filenames": ['/Users/Delneg/Documents/noteshrink/my_notes/savva_1.jpg'], #массив путей к файлам
-#     "global_palette": False, # одна палитра для всех картинок
-#     "num_colors": 8, #цветов на выходе
-#     "pdf_cmd": 'convert %i %o', # команда для пдф
-#     "pdfname": 'junk.pdf', #название выходного пдф файла
-#     "postprocess_cmd": None,
-#     "postprocess_ext": '_post.png', # название после процессинга (?)
-#     "quiet": False, # сократить выдачу
-#     "sample_fraction": 0.05, #пикселей брать за образец в %
-#     "sat_threshold": 0.2, #насыщенность фона
-#     "saturate": True, #насыщать
-#     "sort_numerically": True, # оставить порядок следования
-#     "value_threshold": 0.25, # пороговое значение фона
-#     "white_bg": False # белый фон
-# }
-# test_options = AttrDict(d)
-# notescan_main(test_options)
