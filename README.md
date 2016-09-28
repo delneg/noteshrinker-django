@@ -39,6 +39,6 @@ Feel free to contribute, I will review all responses.
 
 Locales
 ------
-At the moment I'm writing this (29 sept 2016) - the only locale availible is russian, though I'm planning to add English ASAP.
+At the moment I'm writing this (29 sept 2016) - the only locale availible is russian, though I'm planning to add english ASAP.
 Feel free to add your locale - it's not that hard!
 
