@@ -19,20 +19,15 @@ How do i launch it?
 ------
 
 First of all, get python 3 & then get pip.
+
 1. [Python 3](https://www.python.org/downloads/)
 2. [Pip](https://pip.pypa.io/en/stable/installing/)
-Then, clone this repo (attention! it will be cloned to the current directory, so make sure you do it in some kinda documents or special one)
-```bash
-git clone https://github.com/delneg/noteshrinker-django/
-```
-3. Then, ```cd noteshrinker-django``` and ```pip3 install -r requirements.txt```
-4. Tweak the settings in the bottom of the settings.py file.
-4. Finally,  from the root directory of the project
-```bash
-python3 manage.py migrate
-python3 manage.py runserver
-```
-5. Navigate to http://127.0.0.1:8000 in your browser!
+
+3. Then, clone this repo (attention! it will be cloned to the current directory, so make sure you do it in some kinda documents or special one) ```git clone https://github.com/delneg/noteshrinker-django/ ```
+4. Then, ```cd noteshrinker-django``` and ```pip3 install -r requirements.txt```
+5. Tweak the settings in the bottom of the settings.py file.
+6. Finally,  from the root directory of the project ```python3 manage.py migrate``` and  ```bash python3 manage.py runserver ```
+7. Navigate to http://127.0.0.1:8000 in your browser!
 
 License
 ------
