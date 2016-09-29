@@ -15,6 +15,9 @@ Look at the image provided:
 Better resolution is availible in the "example" folder of this repo. It is not perfect example, it is the one done with the defaults,
 yet it can be made better by tweaking settings.
 
+How does it look like?
+------
+![ui](https://github.com/delneg/noteshrinker-django/blob/master/example/ui.jpg?raw=true "UI")
 How do i launch it?
 ------
 
@@ -39,6 +42,12 @@ Feel free to contribute, I will review all responses.
 
 Locales
 ------
-At the moment I'm writing this (29 sept 2016) - the only locale availible is russian, though I'm planning to add english ASAP.
-Feel free to add your locale - it's not that hard!
+Currently the app has Russian and English languages availible.
+Feel free to add your locale - I'll appreciate it!
 
+To add a locale:
+Add a locale to ```LANGUAGES``` in settings.py file
+
+Do ```django-admin makemessages```, edit the django.po file in locale/{local_code}/LC_MESSAGES/
+
+Then run ```django-admin compilemessages```
