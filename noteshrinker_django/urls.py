@@ -15,8 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import include,url
 from django.contrib import admin
-
+from django.conf.urls.i18n import i18n_patterns
+from django.utils.translation import ugettext_lazy as _
+from noteshrinker import views as noteshrinker_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('noteshrinker.urls'))
+
 ]
+urlpatterns += i18n_patterns(
+    url(_(r'^$'), noteshrinker_views.PictureCreateView.as_view(), name='index'),
+)

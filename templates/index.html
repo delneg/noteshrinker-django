@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load upload_tags %}
+{% load i18n %}
 {% block content %}
     <style>
         .ui-input-text {
@@ -77,12 +78,22 @@
     </style>
     <div class="container">
         <h1>NoteShrinker</h1>
-        <h2 class="lead">Простое решение для удобства работы с заметками, лекциями, записками и рабочими
-            документами</h2>
+
+        {% get_available_languages as languages %}
+
+        {% trans "Переключить язык:" %}
+        <div class="row">
+        {% for lang_code, lang_name in languages %}
+            {% language lang_code %}
+            <a href="/{{ lang_code }}/" class="btn btn-sm">{{ lang_name }}</a>
+            {% endlanguage %}
+        {% endfor %}
+        </div>
+
+        <h2 class="lead">{% trans "Простое решение для удобства работы с заметками, лекциями, записками и рабочими документами" %}</h2>
         <br>
         <blockquote>
-            <p>Добавьте файлы, нажмите на кнопку <strong>Преобразовать</strong> и загрузите свои изображения в PDF или в
-                сжатых PNG по отдельности.</p>
+            <p>{% trans "Добавьте файлы, нажмите на кнопку <strong>Преобразовать</strong> и загрузите свои изображения в PDF или в сжатых PNG по отдельности." %}</p>
         </blockquote>
         <br>
 
@@ -94,34 +105,34 @@
                     <!-- The fileinput-button span is used to style the file input field as button -->
                     <span class="btn btn-success fileinput-button">
                         <i class="glyphicon glyphicon-plus"></i>
-                        <span>1. Добавить файлы</span>
+                        <span>{% trans "1. Добавить файлы" %}</span>
                         <input type="file" name="file" multiple>
                     </span>
                     <span class="btn btn-primary" id="fileshrink-button" onclick="send_and_shrink()">
                         <i id="fileshrink-spinner" style="display: none;" class="glyphicon glyphicon-repeat gly-spin"></i>
-                            2. Преобразовать
+                            {% trans "2. Преобразовать" %}
                     </span>
                     <div class="row">
                         <a class="btn btn-warning disabled" id="download-pdf-button" target="_blank" style="color:#fff">
-                            3. Скачать PDF
+                            {% trans "3. Скачать PDF" %}
                         </a>
                         <a class="btn btn-warning disabled" id="download-zip-button" target="_blank" style="color:#fff">
-                            3. Скачать изображения в ZIP архиве
+                            {% trans "3. Скачать изображения в ZIP архиве" %}
                         </a>
                     </div>
 
                     <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
                     <button type="submit" class="btn btn-primary start btn-md">
                         <i class="glyphicon glyphicon-upload"></i>
-                        <span>Загрузить все</span>
+                        <span>{% trans "Загрузить все" %}</span>
                     </button>
                     <button type="reset" class="btn btn-warning cancel btn-sm">
                         <i class="glyphicon glyphicon-ban-circle"></i>
-                        <span>Отменить загрузку</span>
+                        <span>{% trans "Отменить загрузку" %}</span>
                     </button>
                     <button type="button" class="btn btn-danger delete btn-sm" id="clear-all-button">
                         <i class="glyphicon glyphicon-trash"></i>
-                        <span>Удалить выбранные</span>
+                        <span>{% trans "Удалить выбранные" %}</span>
                     </button>
                     <!-- The loading indicator is shown during file processing -->
                     <span class="fileupload-loading"></span>
@@ -149,50 +160,50 @@
 
         </style>
         <div class="col-md-offset-2 col-md-4">
-            <h2> Настройки </h2>
+            <h2>{% trans " Настройки " %}</h2>
             <div class="row">
-                <label for="base-name">Название картинок</label>
-                <input type="text" id="base-name" value="страница">
+                <label for="base-name">{% trans "Название картинок" %}</label>
+                <input type="text" id="base-name" value="{% trans 'картинка' %}">
             </div>
             <div class="row">
-                <label for="pdf-name">Название PDF</label>
+                <label for="pdf-name">{% trans "Название PDF" %}</label>
                 <div class="input-group">
-                    <input id="pdf-name" type="text" value="документы" aria-describedby="pdf-appendix">
+                    <input id="pdf-name" type="text" value="{% trans 'документы' %}" aria-describedby="pdf-appendix">
                     <span class="input-group-addon" id="pdf-appendix">.pdf</span>
                 </div>
             </div>
             <div class="row">
 
-                <label for="colors-amount">Цветов на выходе</label>
+                <label for="colors-amount">{% trans "Цветов на выход" %}</label>
                 <input type="range" class="custom" id="colors-amount" min="1" max="20" value="8"/>
             </div>
             <div class="row">
-                <label for="pixel-amount">Пикселей учитывать, в %</label>
+                <label for="pixel-amount">{% trans "Пикселей учитывать, в %" %}</label>
                 <input type="range" id="pixel-amount" min="1" max="30" value="5"/>
             </div>
             <div class="row">
-                <label for="sat-threshold-amount">Насыщенность фона</label>
+                <label for="sat-threshold-amount">{% trans "Насыщенность фона" %}</label>
                 <input type="range" id="sat-threshold-amount" min="0" max="1" step="0.1" value="0.2"
                 />
             </div>
             <div class="row">
-                <label for="val-threshold-amount">Пороговое значение фона</label>
+                <label for="val-threshold-amount">{% trans "Пороговое значение фона" %}</label>
                 <input type="range" id="val-threshold-amount" min="0" max="1" step="0.1" value="0.25"
                 />
             </div>
             <div class="row">
                 <input type="checkbox" id="use-one-palette"/>
-                <label for="use-one-palette">Единая палитра цветов</label>
+                <label for="use-one-palette">{% trans "Единая палитра цветов" %}</label>
 
             </div>
             <div class="row">
                 <input type="checkbox" id="sort-numerically" checked/>
-                <label for="sort-numerically">Оставить порядок следования</label>
+                <label for="sort-numerically">{% trans "Оставить порядок следования" %}</label>
 
             </div>
             <div class="row">
                 <input type="checkbox" id="white-background"/>
-                <label for="white-background">Белый фон</label>
+                <label for="white-background">{% trans "Белый фон" %}</label>
 
             </div>
 
@@ -202,11 +213,12 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Примечания</h3>
+                    <h3 class="panel-title">{% trans "Примечания" %}</h3>
                 </div>
                 <div class="panel-body">
                     <ul>
-                        <li>Максимальный размер изображения - <strong>50 Мб</strong>.</li>
+                        {% blocktrans %}
+                            <li>Максимальный размер изображения - <strong>50 Мб</strong>.</li>
                         <li>Для загрузки доступны только файлы изображений (<strong>JPG, GIF, PNG</strong>).</li>
                         <li>Вы можете <strong>перетащить</strong> файлы прямо в окно браузера (смотрите документацию по
                             <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Поддержке
@@ -215,6 +227,7 @@
                         <li>Этот проект сделан на основе <strong>открытого исходного кода (open source) </strong> - он
                             доступен по ссылке <a href="http://github.com/delneg/noteshrinker-django">Noteshrinker</a>.
                         </li>
+                        {% endblocktrans %}
                     </ul>
                 </div>
             </div>
@@ -265,7 +278,24 @@
 
     <script src="{% static 'noteshrinker/js/main.js' %}"></script>
     <script src="{% static 'noteshrinker/js/csrf.js' %}"></script>
-    <script src="{% static 'noteshrinker/js/locale.js' %}"></script>
+    <script >
+            window.locale = {
+            "fileupload": {
+                "errors": {
+                    "maxFileSize": '{% trans "Файл слишком большой" %}' ,
+                    "minFileSize": '{% trans "Файл слишком маленький" %}' ,
+                    "acceptFileTypes": '{% trans "Запрещенный тип файла" %}' ,
+                    "maxNumberOfFiles": '{% trans "Максимальное кол-во файлов достигнуто" %}' ,
+                    "uploadedBytes": '{% trans "Загружено больше данных, чем размер файла" %}' ,
+                    "emptyResult": '{% trans "Сервер вернул пустой ответ на загрузку" %}' ,
+                },
+                "error": '{% trans "Ошибка" %}' ,
+                "start": '{% trans "Загрузить" %}' ,
+                "cancel": '{% trans "Отменить" %}' ,
+                "destroy": '{% trans "Удалить" %}' ,
+            }
+        };
+    </script>
 
     <script src="{% static 'noteshrinker/js/jquery.cookie.js' %}"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -353,13 +383,13 @@
                     },
                     error: function (data) {
                         $("#fileshrink-button").button('reset');
-                        //TODO: показать алерт с ошибкой
+                        //TODO: show error alert
                         clear_alerts();
                         console.log(data);
                     }
                 });
             } else {
-                display_alert('Нет загруженных файлов!', 'danger', $("#first-col"));
+                display_alert('{% trans "Нет загруженных файлов!" %}', 'danger', $("#first-col"));
             }
         }
     </script>
