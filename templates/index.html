@@ -75,6 +75,24 @@
         transform: rotate(359deg);
       }
     }
+    .flag-icon {
+      background-size: contain;
+      background-position: 50%;
+      background-repeat: no-repeat;
+      position: relative;
+      display: inline-block;
+      width: 1.33333333em;
+      line-height: 1em;
+    }
+    .flag-icon:before {
+      content: "\00a0";
+    }
+    .flag-icon-ru{
+        background-image: url({% static 'noteshrinker/img/ru.svg' %});
+    }
+    .flag-icon-en{
+        background-image: url({% static 'noteshrinker/img/us.svg' %});
+    }
     </style>
     <div class="container">
         <h1>NoteShrinker</h1>
@@ -85,7 +103,7 @@
         <div class="row">
         {% for lang_code, lang_name in languages %}
             {% language lang_code %}
-            <a href="/{{ lang_code }}/" class="btn btn-sm">{{ lang_name }}</a>
+            <span class="flag-icon flag-icon-{{ lang_code }}"></span><a href="/{{ lang_code }}/" class="btn btn-sm">{{ lang_name }}</a>
             {% endlanguage %}
         {% endfor %}
         </div>
