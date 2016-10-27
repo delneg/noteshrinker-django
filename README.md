@@ -12,7 +12,7 @@ Example
 ------
 Look at the image provided:
 ![before_after_image](https://github.com/delneg/noteshrinker-django/blob/master/example/before_after.jpg?raw=true "Before-After")
-Better resolution is availible in the "example" folder of this repo. It is not perfect example, it is the one done with the defaults,
+Better resolution is available in the "example" folder of this repo. It is not perfect example, it is the one done with the defaults,
 yet it can be made better by tweaking settings.
 
 How does it look like?
@@ -29,7 +29,7 @@ First of all, get python 3 & then get pip.
 3. Then, clone this repo (attention! it will be cloned to the current directory, so make sure you do it in some kinda documents or special one) ```git clone https://github.com/delneg/noteshrinker-django/ ```
 4. Then, ```cd noteshrinker-django``` and ```pip3 install -r requirements.txt```
 5. Tweak the settings in the bottom of the settings.py file.
-6. Finally,  from the root directory of the project ```python3 manage.py migrate``` and  ```bash python3 manage.py runserver ```
+6. Finally,  from the root directory of the project ```python3 manage.py migrate``` and  ```python3 manage.py runserver ```
 7. Navigate to http://127.0.0.1:8000 in your browser!
 
 License
