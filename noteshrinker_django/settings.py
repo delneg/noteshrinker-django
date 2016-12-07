@@ -117,6 +117,7 @@ LOCALE_PATHS = [
 LANGUAGES = [
   ('ru', _('Russian')),
   ('en', _('English')),
+  ('pt', _('Portuguese')),
 ]
 
 TIME_ZONE = 'Europe/Moscow'

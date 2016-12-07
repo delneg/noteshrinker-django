@@ -1,0 +1,198 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-29 04:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: templates/index.html:84
+msgid "Переключить язык:"
+msgstr "Mudar a lingua:"
+
+#: templates/index.html:93
+msgid ""
+"Простое решение для удобства работы с заметками, лекциями, записками и "
+"рабочими документами"
+msgstr "Ferramenta prática para trabalhar com notas, apontamentos e documentos."
+
+#: templates/index.html:96
+msgid ""
+"Добавьте файлы, нажмите на кнопку <strong>Преобразовать</strong> и загрузите "
+"свои изображения в PDF или в сжатых PNG по отдельности."
+msgstr ""
+"Carregue os ficheiros, clique <strong>Converter</strong> e faça download "
+"como PDF ou num arquivo zip."
+
+#: templates/index.html:108
+msgid "1. Добавить файлы"
+msgstr "1. Adicionar ficheiros"
+
+#: templates/index.html:113
+msgid "2. Преобразовать"
+msgstr "2. Converter"
+
+#: templates/index.html:117
+msgid "3. Скачать PDF"
+msgstr "3. Download PDF"
+
+#: templates/index.html:120
+msgid "3. Скачать изображения в ZIP архиве"
+msgstr "3. Download de imagens em arquivo ZIP"
+
+#: templates/index.html:127
+msgid "Загрузить все"
+msgstr "Carregar tudo"
+
+#: templates/index.html:131
+msgid "Отменить загрузку"
+msgstr "Cancelar"
+
+#: templates/index.html:135
+msgid "Удалить выбранные"
+msgstr "Eliminar seleccionados"
+
+#: templates/index.html:163
+msgid " Настройки "
+msgstr " Configuração "
+
+#: templates/index.html:165
+msgid "Название картинок"
+msgstr "Prefixo do ficheiro das imagens"
+
+#: templates/index.html:166
+msgid "картинка"
+msgstr "página"
+
+#: templates/index.html:169
+msgid "Название PDF"
+msgstr "nome do ficheiro PDF"
+
+#: templates/index.html:171
+msgid "документы"
+msgstr "documento"
+
+#: templates/index.html:177
+msgid "Цветов на выход"
+msgstr "Cores resultantes"
+
+#: templates/index.html:181
+#, python-format
+msgid "Пикселей учитывать, в %%"
+msgstr "%% de pixeis para analisar"
+
+#: templates/index.html:185
+msgid "Насыщенность фона"
+msgstr "Saturação do fundo"
+
+#: templates/index.html:190
+msgid "Пороговое значение фона"
+msgstr "Limite do valor do fundo %%"
+
+#: templates/index.html:196
+msgid "Единая палитра цветов"
+msgstr "Pálete única para todas as pages"
+
+#: templates/index.html:201
+msgid "Оставить порядок следования"
+msgstr "Ficheiros ordenados como especificado"
+
+#: templates/index.html:206
+msgid "Белый фон"
+msgstr "Fundo branco"
+
+#: templates/index.html:216
+msgid "Примечания"
+msgstr "Notas"
+
+#: templates/index.html:220
+msgid ""
+"\n"
+"                            <li>Максимальный размер изображения - <strong>50 "
+"Мб</strong>.</li>\n"
+"                        <li>Для загрузки доступны только файлы изображений "
+"(<strong>JPG, GIF, PNG</strong>).</li>\n"
+"                        <li>Вы можете <strong>перетащить</strong> файлы "
+"прямо в окно браузера (смотрите документацию по\n"
+"                            <a href=\"https://github.com/blueimp/jQuery-File-"
+"Upload/wiki/Browser-support\">Поддержке\n"
+"                                браузеров</a>).\n"
+"                        </li>\n"
+"                        <li>Этот проект сделан на основе <strong>открытого "
+"исходного кода (open source) </strong> - он\n"
+"                            доступен по ссылке <a href=\"http://github.com/"
+"delneg/noteshrinker-django\">Noteshrinker</a>.\n"
+"                        </li>\n"
+"                        "
+msgstr ""
+"\n"
+"                            <li>Tamanho máximo do ficheiro - <strong>50 Mb</strong>.</"
+"li>\n"
+"                        <li>Apenas imagens são permitidas (<strong>JPG, GIF, PNG</"
+"strong>).</li>\n"
+"                        <li>É possivel <strong>arrastar e largar</strong> "
+"na janela do browser (ver a documentação em \n"
+"                            <a href=\"https://github.com/blueimp/jQuery-File-"
+"Upload/wiki/Browser-support\">para se é suportado pelo seu browser\n</a>).\n"
+"                        </li>\n"
+"                        <li>Este projecto é <strong> Open Source </strong> "
+"- está disponivel em \n"
+"                             <a href=\"http://github.com/delneg/noteshrinker-"
+"django\">Noteshrinker</a>.\n"
+"                        </li>\n"
+"                        "
+
+#: templates/index.html:285
+msgid "Файл слишком большой"
+msgstr "O ficheiro é demasiado grande"
+
+#: templates/index.html:286
+msgid "Файл слишком маленький"
+msgstr "O ficheiro é demasiado pequeno"
+
+#: templates/index.html:287
+msgid "Запрещенный тип файла"
+msgstr "Extensão do ficheiro restrica"
+
+#: templates/index.html:288
+msgid "Максимальное кол-во файлов достигнуто"
+msgstr "Tamanho máximo do ficheiro alcançado"
+
+#: templates/index.html:289
+msgid "Загружено больше данных, чем размер файла"
+msgstr "Carregou mais do que o tamanho do ficheiro"
+
+#: templates/index.html:290
+msgid "Сервер вернул пустой ответ на загрузку"
+msgstr "Servidor respondeu com resposta vazia"
+
+#: templates/index.html:292
+msgid "Ошибка"
+msgstr "Erro"
+
+#: templates/index.html:293
+msgid "Загрузить"
+msgstr "Carregar"
+
+#: templates/index.html:294
+msgid "Отменить"
+msgstr "Cancelar"
+
+#: templates/index.html:295
+msgid "Удалить"
+msgstr "Eliminar"
+
+#: templates/index.html:392
+msgid "Нет загруженных файлов!"
+msgstr "Nenhum ficheiro foi carregado!"
