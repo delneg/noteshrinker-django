@@ -10,8 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-29 04:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: 高垚鑫 <EMAIL@ADDRESS>\n"
+"Language-Team: Simplified Chinese <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,102 +19,102 @@ msgstr ""
 
 #: templates/index.html:84
 msgid "Переключить язык:"
-msgstr "Change language:"
+msgstr "更改语言:"
 
 #: templates/index.html:93
 msgid ""
 "Простое решение для удобства работы с заметками, лекциями, записками и "
 "рабочими документами"
-msgstr "Easy solution to work with notes, lectures and documents"
+msgstr "轻松整理笔记，讲稿和各类文件"
 
 #: templates/index.html:96
 msgid ""
 "Добавьте файлы, нажмите на кнопку <strong>Преобразовать</strong> и загрузите "
 "свои изображения в PDF или в сжатых PNG по отдельности."
 msgstr ""
-"Upload files, press <strong>Convert</strong> and download your images in a "
-"compiled PDF or compressed PNG's"
+"上传文件, 点击 <strong>转换按钮</strong> 下载 "
+"已压缩好的 PDF 或 PNG 文件"
 
 #: templates/index.html:108
 msgid "1. Добавить файлы"
-msgstr "1. Add files"
+msgstr "1. 添加文件"
 
 #: templates/index.html:113
 msgid "2. Преобразовать"
-msgstr "2. Convert"
+msgstr "2. 转换"
 
 #: templates/index.html:117
 msgid "3. Скачать PDF"
-msgstr "3. Download PDF"
+msgstr "3. 下载 PDF"
 
 #: templates/index.html:120
 msgid "3. Скачать изображения в ZIP архиве"
-msgstr "3. Download images in ZIP archive"
+msgstr "3. 将图片打包为 ZIP 格式下载"
 
 #: templates/index.html:127
 msgid "Загрузить все"
-msgstr "Upload all"
+msgstr "上传所有"
 
 #: templates/index.html:131
 msgid "Отменить загрузку"
-msgstr "Cancel"
+msgstr "取消"
 
 #: templates/index.html:135
 msgid "Удалить выбранные"
-msgstr "Delete selected"
+msgstr "删除所选"
 
 #: templates/index.html:163
 msgid " Настройки "
-msgstr " Settings "
+msgstr " 设置 "
 
 #: templates/index.html:165
 msgid "Название картинок"
-msgstr "Images base filename"
+msgstr "图片文件名"
 
 #: templates/index.html:166
 msgid "картинка"
-msgstr "page"
+msgstr "页面"
 
 #: templates/index.html:169
 msgid "Название PDF"
-msgstr "PDF filename"
+msgstr "PDF 文件名"
 
 #: templates/index.html:171
 msgid "документы"
-msgstr "document"
+msgstr "文档"
 
 #: templates/index.html:177
 msgid "Цветов на выход"
-msgstr "Resulting colors"
+msgstr "目标颜色"
 
 #: templates/index.html:181
 #, python-format
 msgid "Пикселей учитывать, в %%"
-msgstr "%% of pixels to sample"
+msgstr "取样 %% 像素点"
 
 #: templates/index.html:185
 msgid "Насыщенность фона"
-msgstr "Background saturation"
+msgstr "背景饱和度"
 
 #: templates/index.html:190
 msgid "Пороговое значение фона"
-msgstr "Background value threshold %%"
+msgstr "背景阈值 %%"
 
 #: templates/index.html:196
 msgid "Единая палитра цветов"
-msgstr "Use one global palette for all pages"
+msgstr "所有页面使用同一配色方案"
 
 #: templates/index.html:201
 msgid "Оставить порядок следования"
-msgstr "Keep filenames ordered as specified"
+msgstr "按规则对文件排序"
 
 #: templates/index.html:206
 msgid "Белый фон"
-msgstr "Make background white"
+msgstr "使背景变白"
 
 #: templates/index.html:216
 msgid "Примечания"
-msgstr "Notes"
+msgstr "笔记"
 
 #: templates/index.html:220
 msgid ""
@@ -137,18 +137,18 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                            <li>Maximum file size - <strong>50 Mb</strong>.</"
+"                            <li>文件最大限制 - <strong>50 Mb</strong>.</"
 "li>\n"
-"                        <li>Only images are allowed (<strong>JPG, GIF, PNG</"
+"                        <li>只能上传图片格式的文件 (<strong>JPG, GIF, PNG</"
 "strong>).</li>\n"
-"                        <li>You can <strong>drag & drop</strong> filesright "
-"on the browser window (see the docs at \n"
+"                        <li>你可以直接 <strong>拖放</strong>"
+"在浏览器窗口内 (查看文件在 \n"
 "                            <a href=\"https://github.com/blueimp/jQuery-File-"
-"Upload/wiki/Browser-support\">for browser\n"
-"                                support</a>).\n"
+"Upload/wiki/Browser-support\">为浏览器\n"
+"                                支持</a>).\n"
 "                        </li>\n"
-"                        <li>This project is  <strong> Open Source </strong> "
-"- it is available at\n"
+"                        <li>本项目是  <strong> 开源的 </strong> "
+"- 在这里提供支持\n"
 "                             <a href=\"http://github.com/delneg/noteshrinker-"
 "django\">Noteshrinker</a>.\n"
 "                        </li>\n"
@@ -156,44 +156,44 @@ msgstr ""
 
 #: templates/index.html:285
 msgid "Файл слишком большой"
-msgstr "The file is too big"
+msgstr "文件过大"
 
 #: templates/index.html:286
 msgid "Файл слишком маленький"
-msgstr "The file is too small"
+msgstr "文件过小"
 
 #: templates/index.html:287
 msgid "Запрещенный тип файла"
-msgstr "Restricted file extension"
+msgstr "拓展名不符"
 
 #: templates/index.html:288
 msgid "Максимальное кол-во файлов достигнуто"
-msgstr "Maximum file amount reached"
+msgstr "文件数已达上限"
 
 #: templates/index.html:289
 msgid "Загружено больше данных, чем размер файла"
-msgstr "Uploaded more data than filesize"
+msgstr "文件大小已达上限"
 
 #: templates/index.html:290
 msgid "Сервер вернул пустой ответ на загрузку"
-msgstr "Server returned empty response"
+msgstr "服务器没有应答"
 
 #: templates/index.html:292
 msgid "Ошибка"
-msgstr "Error"
+msgstr "错误"
 
 #: templates/index.html:293
 msgid "Загрузить"
-msgstr "Upload"
+msgstr "上传"
 
 #: templates/index.html:294
 msgid "Отменить"
-msgstr "Cancel"
+msgstr "取消"
 
 #: templates/index.html:295
 msgid "Удалить"
-msgstr "Delete"
+msgstr "删除"
 
 #: templates/index.html:392
 msgid "Нет загруженных файлов!"
-msgstr "No files uploaded!"
+msgstr "没有上传文件!"
