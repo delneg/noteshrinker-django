@@ -118,6 +118,7 @@ LANGUAGES = [
   ('ru', _('Russian')),
   ('en', _('English')),
   ('pt', _('Portuguese')),
+  ('cn', _('Simplified Chinese')),
 ]
 
 TIME_ZONE = 'Europe/Moscow'
