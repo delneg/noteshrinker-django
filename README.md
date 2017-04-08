@@ -45,7 +45,7 @@ Feel free to contribute, I will review all responses.
 
 Locales
 ------
-Currently the app has Russian,English and Portugese (by https://github.com/Qu4tro)  languages availiable.
+Currently the app has Russian,English, Portugese (by https://github.com/Qu4tro), Chinese (by https://github.com/gaoyaoxin) languages availiable.
 Feel free to add your locale - I'll appreciate it!
 
 To add a locale:
