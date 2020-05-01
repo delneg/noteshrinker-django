@@ -268,12 +268,9 @@
     {% upload_js %}
 {% endblock %}
 {% block js %}
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
-            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="{% static 'noteshrinker/js/jquery-1.12.4.min.js' %}"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+    <script src="{% static 'noteshrinker/js/bootstrap-3.3.7.min.js' %}"></script>
     <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
     <script src="{% static 'noteshrinker/js/vendor/jquery.ui.widget.js' %}"></script>
     <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
@@ -319,7 +316,7 @@
     </script>
 
     <script src="{% static 'noteshrinker/js/jquery.cookie.js' %}"></script>
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="{% static 'noteshrinker/js/jquery.mobile-1.4.5.min.js' %}"></script>
 
     <style>
         .slider-selection {
