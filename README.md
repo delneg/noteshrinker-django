@@ -30,7 +30,7 @@ and use python instead of python3, and pip instead of pip3
 1. [Python 3](https://www.python.org/downloads/)
 2. [Pip](https://pip.pypa.io/en/stable/installing/)
 3. Then, clone this repo (attention! it will be cloned to the current directory, so make sure you do it in some kinda documents or special one) ```git clone https://github.com/delneg/noteshrinker-django/ ```
-4. Then, ```cd noteshrinker-django``` and ```pip3 install -r requirements.txt```
+4. Then, ```cd noteshrinker_django``` and ```pip3 install -r requirements.txt```
 5. Tweak the settings in the bottom of the settings.py file.
 6. Finally,  from the root directory of the project ```python3 manage.py migrate``` and  ```python3 manage.py runserver ```
 7. Navigate to [http://localhost:8000](http://localhost:8000) in your browser!
