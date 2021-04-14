@@ -1,17 +1,24 @@
-from django.shortcuts import render
-from django.http import HttpResponse, Http404, JsonResponse, HttpResponseBadRequest
-from django.views.generic import CreateView, DeleteView, ListView
 import json
+import os
+import random
+import string
+import zipfile
+
+from django.conf import settings
+from django.http import Http404, JsonResponse, HttpResponseBadRequest
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.decorators.http import require_POST, require_GET
+from django.views.generic import CreateView, DeleteView, ListView
+
 from .models import Picture
+from .noteshrink_module import AttrDict, notescan_main
 from .response import JSONResponse, response_mimetype
 from .serialize import serialize
-from django.views.decorators.http import require_POST, require_GET
-from .noteshrink_module import AttrDict, notescan_main
-from django.conf import settings
-from django.http import HttpResponse
-from .utils import random_string
-import zipfile
-import os
+
+
+def random_string(N):
+    return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(N))
 
 
 @require_GET
@@ -21,10 +28,10 @@ def download_pdf(request):
     if os.path.exists(file_path):
         with open(file_path, 'rb') as fh:
             response = HttpResponse(fh.read(), content_type="application/pdf")
-            response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)+".pdf"
+            response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path) + ".pdf"
             return response
     else:
-        raise HttpResponseBadRequest
+        return HttpResponseBadRequest()
 
 
 def download_zip(request):

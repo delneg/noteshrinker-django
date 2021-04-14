@@ -120,7 +120,7 @@
 
         <!-- The fileinput-button span is used to style the file input field as button -->
         <div class="col-md-6" id="first-col">
-            <form id="fileupload" method="post" action="." enctype="multipart/form-data">{% csrf_token %}
+            <form id="fileupload" method="post" action="/{{ lang_code }}/" enctype="multipart/form-data">{% csrf_token %}
 
                 <div class="row fileupload-buttonbar">
                     <!-- The fileinput-button span is used to style the file input field as button -->

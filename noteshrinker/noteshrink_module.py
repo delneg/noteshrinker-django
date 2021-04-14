@@ -8,7 +8,6 @@ License: MIT
 # for some reason pylint complains about members being undefined :(
 # pylint: disable=E1101
 
-import sys
 import os
 import re
 import subprocess
@@ -17,6 +16,9 @@ import shlex
 import numpy as np
 from PIL import Image
 from scipy.cluster.vq import kmeans, vq
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class AttrDict(dict):
@@ -160,8 +162,7 @@ def postprocess(output_filename, options):
         os.unlink(post_filename)
 
     if not options.quiet:
-        print('  running "{}"...'.format(cmd), end=' ')
-        sys.stdout.flush()
+        logger.info('  running "{}"...'.format(cmd), end=' ')
 
     try:
         result = subprocess.call(subprocess_args)
@@ -173,14 +174,14 @@ def postprocess(output_filename, options):
     if result == 0:
 
         if not options.quiet:
-            print('{:.1f}% reduction'.format(
+            logger.info('{:.1f}% reduction'.format(
                 100 * (1.0 - float(after) / before)))
 
         return post_filename
 
     else:
 
-        sys.stderr.write('warning: postprocessing failed!\n')
+        logger.error('warning: postprocessing failed!\n')
         return None
 
 
@@ -230,7 +231,7 @@ returns the image DPI in x and y as a tuple.'''
     try:
         pil_img = Image.open(input_filename)
     except IOError:
-        sys.stderr.write('warning: error opening {}\n'.format(
+        logger.error('warning: error opening {}\n'.format(
             input_filename))
         return None, None
 
@@ -292,7 +293,7 @@ palette, as well as a mask corresponding to the foreground pixels.
     '''
 
     if not options.quiet:
-        print('  getting palette...')
+        logger.info('  getting palette...')
 
     bg_color = get_bg_color(samples, 6)
 
@@ -321,7 +322,7 @@ the palette.
     '''
 
     if not options.quiet:
-        print('  applying palette...')
+        logger.info('  applying palette...')
 
     bg_color = palette[0]
 
@@ -352,7 +353,7 @@ the background color to pure white.
     '''
 
     if not options.quiet:
-        print('  saving {}...'.format(output_filename))
+        logger.info('  saving {}...'.format(output_filename))
 
     if options.saturate:
         palette = palette.astype(np.float32)
@@ -385,7 +386,7 @@ their samples together into one large array.
     all_samples = []
 
     if not options.quiet:
-        print('building global palette...')
+        logger.info('building global palette...')
 
     for input_filename in filenames:
 
@@ -394,7 +395,7 @@ their samples together into one large array.
             continue
 
         if not options.quiet:
-            print('  processing {}...'.format(input_filename))
+            logger.info('  processing {}...'.format(input_filename))
 
         samples = sample_pixels(img, options)
         input_filenames.append(input_filename)
@@ -410,7 +411,7 @@ their samples together into one large array.
     global_palette = get_palette(all_samples, options)
 
     if not options.quiet:
-        print('  done\n')
+        logger.info('  done\n')
 
     return input_filenames, global_palette
 
@@ -429,7 +430,7 @@ def emit_pdf(outputs, options):
     cmd = cmd.replace('%i', ' '.join(outputs))
 
     if not options.quiet:
-        print('running PDF command "{}"...'.format(cmd_print))
+        logger.info('running PDF command "{}"...'.format(cmd_print))
 
     try:
         result = subprocess.call(shlex.split(cmd))
@@ -438,9 +439,9 @@ def emit_pdf(outputs, options):
 
     if result == 0:
         if not options.quiet:
-            print('  wrote', options.pdfname)
+            logger.info('  wrote', options.pdfname)
     else:
-        sys.stderr.write('warning: PDF command failed\n')
+        logger.error('warning: PDF command failed\n')
     return options.pdfname
 
 
@@ -469,7 +470,7 @@ def notescan_main(options):
             options.basename, len(outputs))
 
         if not options.quiet:
-            print('opened', input_filename)
+            logger.info('opened', input_filename)
 
         if not do_global:
             samples = sample_pixels(img, options)
@@ -489,10 +490,9 @@ def notescan_main(options):
         outputs.append(saved_filename)
         base_filenames.append(output_filename)
         if not options.quiet:
-            print('  done\n')
+            logger.info('  done\n')
 
     saved_pdf = emit_pdf(outputs, options)
     return base_filenames, saved_pdf
-
 
     ######################################################################

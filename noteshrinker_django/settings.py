@@ -41,13 +41,12 @@ INSTALLED_APPS = [
     'noteshrinker',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware'
@@ -140,3 +139,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'noteshrinker', 'media')
 PDF_ROOT = os.path.join(MEDIA_ROOT, 'pdf')
 PNG_ROOT = os.path.join(MEDIA_ROOT, 'png')
 RANDOM_STRING_LEN=7
+APPEND_SLASH = False

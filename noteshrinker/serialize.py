@@ -1,6 +1,5 @@
 import mimetypes
 import re
-from django.core.urlresolvers import reverse
 
 
 def order_name(name):
